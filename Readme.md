@@ -20,7 +20,7 @@ In order to achieve the main objective, 3 lambda functions with different roles 
 
 These functions, along with any service implementation necessary for their operation, are created automatically by Python using the boto3 library. For the development of the functions, Python3 has been used together with boto3[^1]For two of them, being the last lambda function developed with Nodejs together with aws-sdk. 
 
-[^1]: Amazon Web Services (AWS) SDK for Python, allowing you to create, configure and manage AWS services in Python
+	[^1]: Amazon Web Services (AWS) SDK for Python, allowing you to create, configure and manage AWS services in Python
 
 ## Develop
 
@@ -40,7 +40,7 @@ Before proceeding with each function, it is necessary to put into context the mo
 
 - **Logging**: All messages displayed by standard output (e.g. *print, console.log, system.out.print*) will be transferred to CloudWatch Logs[^2], allowing them to be queried. 
 
-  ^2]: CloudWatch Logs service for monitoring and storing log files and accessing them.
+	[^2]: CloudWatch Logs service for monitoring and storing log files and accessing them.
 
 - **Stateless**: It is not assumed that the filesystem will be shared between invocations of the lambda function. Only /tmp has write permissions, the rest is read-only for the whole filesystem. 
 
