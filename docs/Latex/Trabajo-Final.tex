@@ -10,18 +10,20 @@
 \usepackage{ifxetex,ifluatex}
 \usepackage{xcolor}
 \usepackage{listings}
+
 \definecolor{lightgrey}{rgb}{0.93,0.93,0.93}
 \lstset{basicstyle=\ttfamily\footnotesize,
   showstringspaces=false,
   breaklines=true,
   columns=flexible,
-  backgroundcolor=\color{lightgrey},
   numbersep=5pt,
   captionpos=b,
   showspaces=false,
-  showstringspaces=false
+  showstringspaces=false,
   commentstyle=\color{red},
-  keywordstyle=\color{blue}
+  keywordstyle=\color{blue},
+  backgroundcolor=\color{lightgrey},
+    frame=lines
 }
 
 \definecolor{eclipseStrings}{RGB}{42,0.0,255}
@@ -129,13 +131,21 @@
 \ifluatex
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
-\title{Trabajo final ICP Serverless Computing}
-\author{Manuel José Martínez Baños}
-\date{}
 
 \begin{document}
+\begin{titlepage}
+     {\includegraphics[width=0.4\textwidth]{dssic.png}\par}
+\vspace{1cm}
+      \vspace{3cm}
+    {\scshape\Huge\noindent Trabajo final ICP\\\centering  Serverless Computing\par}
+         \vspace{2cm}
+{\Large Manuel José Martínez Baños\par}
+\vfill
+{\Large Febrero de 2021 \par}
+  \centering
+ \end{titlepage}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\maketitle
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Indice %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -146,15 +156,15 @@
 \hypertarget{header-n2}{%
 \section{Abstract}\label{header-n2}}
 
-Hoy en día el termino cloud computing no forma parte de un futuro
+Hoy en día el termino \emph{cloud computing} no forma parte de un futuro
 cercano, es ya una realidad que hace tiempo llego a un estado de
 madurez. A raíz de ello, han empezado a coger fuerza otras tendencias
-tecnológicas como el caso de serverless
-computing\protect\hyperlink{1}{{[}5{]}}.
+tecnológicas como el caso de \emph{serverless
+computing}\protect\hyperlink{1}{{[}5{]}}.
 
 Hay que aclarar que el nombre \emph{serverless computing} puede llevar a
 confusión, no significa computación sin necesidad de servidor, la parte
-"\emph{less}" de serverless a la oportunidad que les brinda a los
+"\emph{less}" de serverless significa brindar a los
 clientes de no tener que administrar el servidor que ejecutas sus
 aplicaciones. En este paradigma, se factura las tareas en función del
 uso real de recursos que precisa cada aplicación o tarea en específico.
@@ -179,8 +189,8 @@ representación gráfica tanto de la arquitectura basada en AWS Lambda
 como sus interacciones.
 
 A continuación, son expuestas detalladamente cada una de las funciones
-implementadas, prosiguiendo a posteriori con los resultados obtenidos,
-prosiguiendo el documento con mejoras futuras u otras funcionalidades
+implementadas, prosiguiendo a posteriori con los resultados obtenidos y
+posibles mejoras futuras u otras funcionalidades
 que se podrían desarrollar a consecuencia de la implementación general
 anteriormente mostrada. Para finalmente concluir con unas conclusiones
 obtenidas a lo largo de este trabajo.
@@ -213,12 +223,12 @@ función al subir su resultado a un Bucket S3.
 \section{Metodología}\label{header-n14}}
 
 Para poder abordar el objetivo principal, han sido desarrolladas 3
-funcione lambda con diferentes roles, donde debido al resultado o
+funciones lambda con diferentes roles, donde debido al resultado o
 invocación por parte de una de las tres funciones, se activan las demás
 funciones lambda.
 
 Estas funciones, junto a toda implementación servicio necesario para su
-funcionamiento, es credo automáticamente mediante Python utilizando la
+funcionamiento, es creado automáticamente mediante Python utilizando la
 librería boto3. Para el desarrollo de las funciones se ha hecho uso de
 Python3 junto a boto3\footnote{SDK de Amazon Web Services (AWS) para
   Python, permitiendo en Python crear, configurar y administrar
@@ -262,11 +272,10 @@ función. Esta descargará el fichero HTML y filtrará todo el contenido
 para obtener solo el texto, generando como resultado un fichero con
 extensión \texttt{.txt} que es subido al \textbf{bucket
 alucloud-lambda-out.}
-
+\newpage
 \hypertarget{header-n24}{%
 \subsection{\texorpdfstring{Funciones lambda
 }{Funciones lambda }}\label{header-n24}}
-
 Antes de proceder con cada función es necesario poner en contexto sobre
 el modelo que se sigue en la programación de las funciones lambda
 expuestas anteriormente y detalladas posteriormente. Es necesario
@@ -367,10 +376,14 @@ Como resultado se obtiene un fichero html generado sobre un markdown:
 \\
 Esta función tiene como nombre en AWS lambda como
 \textbf{lambda-check-alucloud31}, es invocada por la anterior función
-denominada \textbf{lambda-markdown-alucloud31}. Entre ellos se realiza
+denominada \textbf{lambda-markdown-alucloud31}. Entre estas dos funciones se realiza
 la siguiente interacción:
-
-Esta función tiene otras características diferenciadoras del anterior:
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{/home/manu/Documents/MASTER/ICP/Trabajo-Final/Trabajo/docs/diagrams/inter-lambdas-func.png}
+\caption{Diagrama de interacción entre lambda-markdown y lambda-check}
+\end{figure}
+Esta función tiene otras características distintas:
 
 \hypertarget{header-n68}{%
 \subparagraph{Características}\label{header-n68}}
@@ -396,7 +409,7 @@ lenguaje.
 \leavevmode
 \newline
 \\
-Esta función es invocada por la función
+Esta función \textbf{lambda-check-alucloud31} es invocada por la función
 \textbf{lambda-markdown-alucloud31} y efectúa los siguientes pasos:
 
 \begin{enumerate}
@@ -422,7 +435,7 @@ estática, permitiendo acceder a cada uno de los ficheros creados:
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.6\textwidth]{/home/manu/Documents/MASTER/ICP/Trabajo-Final/Trabajo/docs/imgs/static_web_page_results.png}
+\includegraphics[width=0.8\textwidth]{/home/manu/Documents/MASTER/ICP/Trabajo-Final/Trabajo/docs/imgs/static_web_page_results.png}
 \caption{Página web estática generada}
 \end{figure}
 
@@ -456,7 +469,7 @@ de la función:
 \leavevmode
 \newline
 \\
-Esta función es invocada cuando un fichero HTML es subido al bucket
+Esta función \textbf{lambda-html-alucloud31} es invocada cuando un fichero HTML es subido al bucket
 alucloud-lambda-out y como\\
 consecuencia lleva a cabo los siguientes pasos:
 
@@ -472,7 +485,7 @@ consecuencia lleva a cabo los siguientes pasos:
 \end{enumerate}
 
 El código de la implementación en el anexo sección A.3.
-
+\newline
 \hypertarget{header-n112}{%
 \subsection{Creación y Lanzamiento}\label{header-n112}}
 
@@ -480,7 +493,7 @@ En el siguiente apartado se muestra y explica cómo se ha llevado a cabo
 el despliegue, indicando los elementos o servicios necesarios, paso a
 seguir y aspectos a tener en cuenta. Además, se especifica como se ha
 llevado a cabo el despliegue automáticamente con ayuda de Python junto a
-la librería Boto3. Todo el contenido del trabajo está disponible en el repositorio \underline{\href{https://github.com/manujose94/FINAL-PROJECT-ICP}{FINAL-PROJECT-ICP}}, en ningún momento ha sido subido ninguna información sensible (e.g credenciales, keys, etc.) 
+la librería Boto3. Todo el contenido del trabajo está disponible en el repositorio \underline{\href{https://github.com/manujose94/FINAL-PROJECT-ICP}{FINAL-PROJECT-ICP}}. En ningún momento ha sido subido ninguna información sensible (e.g credenciales, keys, etc.) 
 
 Para realizar el despliegue es necesario tener a disposición:
 
@@ -512,11 +525,11 @@ Todo ello ha sido realizado con el siguiente orden:
   invocado por un ``\emph{trigger}'' del servicio S3 (Se debe
   especificar el \textbf{arn} del bucket alucloud-lambda en cuestión).
 \item
-  Ahora es añadido el ``\emph{trigger}'' para que sea ejecutado
+  Ahora se agrega el ``\emph{trigger}'' para que sea ejecutado
   automática ante un evento ``\emph{PutObject}'' del bucket
   \emph{alucloud-lambda}.
 \item
-  Es creado el "\emph{trigger}" con el prefijo "31/" y el sufijo
+  Se crea el "\emph{trigger}" con el prefijo "31/" y el sufijo
   \texttt{.md}, antes de añadirlo se comprueba que nuestro disparador no
   existe.
 \item
@@ -527,10 +540,10 @@ Todo ello ha sido realizado con el siguiente orden:
   "\emph{trigger}" de S3, pero ahora indicado el bucket \emph{alucloud-
   lambda -out}.
 \item
-  Es creado el "\emph{trigger}" con el prefijo "31/" y sufijo
+  Se crea el "\emph{trigger}" con el prefijo "31/" y sufijo
   \texttt{.html}, especificando el bucket \emph{alucloud-lambda-out}
 \item
-  Por último, la función \textbf{lambda-markdown-alucloud31} es creada,
+  Por último, la función \textbf{lambda-check-alucloud31} se crea,
   siguiendo los mismos puntos de la función anterior, pero sin añadir el
   "\emph{trigger}" para eventos de S3 (\emph{putObject}).
 \item
@@ -637,10 +650,10 @@ Además, por seguridad, las claves nunca son mostradas, son leídas del
 fichero \texttt{.env} con el siguiente formato:
 
 \begin{lstlisting}[language=bash,caption={Contenido de .env}]
-	ID=31
+	ID=<<ID>>
 	PREFIXSQS=sqs-alucloud
 	PREFIXRULE=alucloud-events-rule-s3-to-sqs-
-	USERNAME_AWS=alucloud31
+	USERNAME_AWS=<<NAME_USER>
 	KEY_ID=<<HERE KEY>>
 	ACCES_KEY=<<HERE ACCES_KEY>>
 	REGION=us-east-1
@@ -699,14 +712,14 @@ Si ha tenido exito la inicialzación, es motrado la siguigente salida.
 \end{lstlisting}
 
 En esta salida, muestra como cada uno de los elementos necesarios para
-el despliegue (\textbf{Figura 1}) ha sido implementada con éxito.
+el despliegue (figura 1) ha sido implementada con éxito.
 
 Además, existen otros parámetros para en un futuro poder ser mejorado,
 por ejemplo, esta implementado la visualización de los registros
 generados por cada una de las funciones en las últimas 24 horas. Para
 obtener los parámetros disponibles:
 
-\begin{lstlisting}[language=bash,caption={script help params}]
+\begin{lstlisting}{bash,caption=Opción help}
 $ init-deployment.py -h
 
 usage: init-deployment.py [-h] [-i INIT] [-l]
@@ -720,8 +733,8 @@ optional arguments:
 \hypertarget{header-n172}{%
 \subsection{Resultados obtenidos}\label{header-n172}}
 
-A continuación, se muestran imágenes de AWS Management
-Console\protect\hyperlink{1}{{[}4{]}}, estas son el resultado del
+A continuación, se muestran imágenes de \textit{AWS Management
+Console}\protect\hyperlink{1}{{[}4{]}}, estas son el resultado del
 despliegue obtenido:
 
 \textbf{Funciones Lambda desplegadas:}
@@ -748,12 +761,13 @@ despliegue obtenido:
 \subsection{Pruebas}\label{header-n178}}
 
 En este apartado, se elaboran una serie de pruebas para comprobar el
-correcto funcionamiento del despliegue. Para ello, son realizadas una serie de ensayos con el fin de evaluar el despliegue.
+correcto funcionamiento del despliegue. Para ello, se han realizado una serie de ensayos con el fin de evaluar el despliegue.
 
 \hypertarget{header-n180}{%
 \subparagraph{Invocación de la función lambda
 lambda-markdown-alucloud31}\label{header-n180}}
 \leavevmode
+\\
 \\
 Una de las primeras pruebas es invocar la función lambda-hmtl-alucloud31 mediante la invocación de un evento utilizando una platilla creada previamente (fuente en el Anexo apartado C.1). En este caso, ha sido utilizado la interfaz de líneas de comandos de AWS\footnote{Linea de comandos AWS: https://aws.amazon.com/es/cli/} como medio mayoritario para realizar las pruebas. 
 \begin{lstlisting}[language=bash,caption={Comando de invocación mediante plantilla}]
@@ -788,8 +802,8 @@ evento, utilizado una plantilla de evento creada. Se ha creado una
 plantilla distinta para cada evento creado, están disponibles en el
 \textbf{anexo} en el apartado C.
 
-Estas plantillas pueden ser lanzadas además, desde AWS Management
-Console, como se muestra en la siguiente imagen:
+Estas plantillas pueden ser lanzadas además, desde \textit{AWS Management
+Console}, como se muestra en la siguiente imagen:
 
 \begin{figure}[H]
 \centering
@@ -801,13 +815,14 @@ Obteniendo como resultado de la ejecución:
 
 \begin{figure}[H]
 \centering
-\includegraphics{/home/manu/Documents/MASTER/ICP/Trabajo-Final/Trabajo/docs/imgs/execution_result_markdown.png}
+\includegraphics[width=0.9\textwidth]{/home/manu/Documents/MASTER/ICP/Trabajo-Final/Trabajo/docs/imgs/execution_result_markdown.png}
 \caption{Captura del resultado al lanzar el Test}
 \end{figure}
 \hypertarget{header-n190}{%
 \subparagraph{Subida de un fichero a S3 y visualización del evento
 generado}\label{header-n190}}
 \leavevmode
+\\
 \\
 Es posible forzar una subida de un fichero local al bucket deseado, por consiguiente, es comprobado el correcto funcionamiento ante una nueva subida, si todo ha ido correctamente, el resultado final deberá ser un nuevo fichero con formato HTML en el bucket alucloud-lambda-out. 
 \begin{lstlisting}[language=bash,caption={Utilizar cp con aws}]
@@ -843,10 +858,10 @@ END RequestId: e869dd5f-cc13-437e-b2fd-ca6602e67530
 REPORT RequestId: e869dd5f-cc13-437e-b2fd-ca6602e67530	Duration: 4145.55 ms	Billed Duration: 4146 ms	Memory Size: 128 MB	Max Memory Used: 84 MB	Init Duration: 509.80 ms
 \end{lstlisting}
 
-También puede ser visualizado directamente desde AWS Management Console
+También puede ser visualizado directamente desde \textit{AWS Management Console}
 en la siguiente dirección, CloudWatch Logs \textgreater{} Log groups
-\textgreater{} /aws/lambda/lambda-markdown-alucloud-31. Aquí es
-visualizada la siguiente imagen como ejemplo:
+\textgreater{} /aws/lambda/lambda-markdown-alucloud-31. Aquí se
+visualiza la siguiente imagen como ejemplo:
 
 \begin{figure}[H]
 \centering
@@ -858,16 +873,31 @@ Si son observados detalladamente los logs, la función
 \textbf{lambda-check-alucloud31} ha funcionado satisfactoriamente, ya
 que ha contestado a la invocación de la función testeada. A continuación
 la línea que representa la contestación de la función
-\textbf{lambda-check-alucloud31}.
+\textbf{lambda-check-alucloud31} formateada por \textbf{lambda-makdwon-alucloud31} .
 
 \begin{lstlisting}[language=bash,caption={Respuesta}]
 Check and Summary HTML Created: File $31/ListOfResult.html with url: https://alucloud-lambda-out.s3.amazonaws.com/31/ListOfResult.html
 \end{lstlisting}
 
+Se puede comprobar el mensaje exacto que devuelve la función \textbf{lambda-check-alucloud31}, invocándola y almacenando la respuesta en un fichero. A continuación, un ejemplo: 
+
+\begin{lstlisting}[language=bash,caption={Invocación de la funcion lambda-check-alucloud31}]
+# Type of invoke must be RequestResponse
+aws lambda invoke --invocation-type RequestResponse --function-name lambda-check-alucloud31 --region us-east-1 --payload file://${PWD}/test_deployment_nodechild.json response.json
+$LATEST	200
+
+# Now, showing message content
+cat response.json 
+
+{"ETag":"\"a74bd4d61fc0c8b76014e3567c8dc5be\"","VersionId":"i0uwLkpcxhl2zufHMkzNSVK3Sh5SBdc7","Location":"https://alucloud-lambda-out.s3.amazonaws.com/31/ListOfResult.html","key":"31/ListOfResult.html","Key":"31/ListOfResult.html","Bucket":"alucloud-lambda-out","message":"Check and Summary HTML Created"}
+\end{lstlisting}
+
+\newpage
 \hypertarget{header-n200}{%
 \subparagraph{Invocación de la función lambda
 lambda-html-alucloud31}\label{header-n200}}
 \leavevmode
+\\
 \\
 Probando ahora la función lambda-hmtl-alucloud31 mediante la invocación de un evento utilizando una platilla creada previamente.
 \begin{lstlisting}[language=bash,caption={Invocar evento}]
@@ -895,9 +925,9 @@ START RequestId: 1029f3e5-3848-44c8-9316-64fa973ca0c2 Version: $LATEST
 	REPORT RequestId: 1029f3e5-3848-44c8-9316-64fa973ca0c2	Duration: 1462.16 ms	Billed Duration: 1463 ms	Memory Size: 128 MB	Max Memory Used: 78 MB	Init Duration: 477.93 ms	
 \end{lstlisting}
 
-Para finalizar las pruebas y confirmar su correcto funcionamiento, es
-mostrado el resultado con una imágen de la interfaz de AWS Management
-Console:
+Para finalizar las pruebas y confirmar su correcto funcionamiento, se
+muestra el resultado con una imágen de la interfaz de \textit{AWS Management
+Console}:
 
 \begin{figure}[H]
 \centering
@@ -917,19 +947,19 @@ ser posible. Además, las librerías existentes para convertir otros tipos
 de documentos a PDF utilizan otras "\emph{sub-librerías}", como
 consecuencia a la hora de comprimir el código para ser enviado a AWS,
 siempre existe algún error debido a que una librería no es detectada.
-Por tanto, para este trabajo has sido utilizadas librerías más ligueras
+Por tanto, para este trabajo se han utilizadas librerías más ligeras
 con menos dependencias, permitiendo de ese modo, la posibilidad de
 probar y modificar la función desde la propia plataforma de AWS
 Management Console.
 
 Para un futuro, es posible tratar cada una de las dependencias o elegir
-otro lenguaje, como NodeJs que es utilizado en entre trabajo.
+otro lenguaje, como NodeJs el qual ha sido utilizado.
 
 \hypertarget{header-n210}{%
 \section{Conclusiones}\label{header-n210}}
 En este trabajo se han mejorado y afianzado los conocimientos previos sobre la arquitectura serverless, obtenidos durante las clases y prácticas de la asignatura de ICP. Además, no solo se ha trabajado con funciones lambda también, con servicios como S3, CloudWatch y visto a groso modo el servicio CloudTrial para el registro de llamadas. 
 
-Como resultado del trabajo realizado, es más claro el posible potencial del servicio AWS Lambda, así como sus ventajas. Ahora no se empieza con un coste inicial de base, pasamos a un pago por uso. Nos proporciona, asimismo, la ventaja de realizar casi cualquier computo sin una infraestructura pre-desplegada, sin tener que lidiar con la tarea de gestionar servidores, cargar, reglas y grupos de auto escalado, pares de claves, etc...  Únicamente es necesario conocer que recursos son los necesarios (memoria) para mantener un estado correcto de nuestra aplicación o despliegue, brindando un ahorro en los costos de mantener una infraestructura y pagando solo por el uso.  
+Como resultado del trabajo realizado se remarca el potencial del servicio AWS Lambda, así como sus ventajas. Ahora no se empieza con un coste inicial de base, pasamos a un pago por uso. Nos proporciona, asimismo, la ventaja de realizar casi cualquier computo sin una infraestructura pre-desplegada, sin tener que lidiar con la tarea de gestionar servidores, cargar, reglas y grupos de auto escalado, pares de claves, entre otros.  Únicamente es necesario conocer que recursos son los necesarios (como la memoria) para mantener un estado correcto de nuestra aplicación o despliegue, brindando un ahorro en los costos de mantener una infraestructura y pagando solo por el uso.  
 
 Esto es un avance en algunos escenarios que pueden ser expresado mediante computación reactiva basada en eventos, generando una nueva etapa de oportunidades en este contexto.
 
