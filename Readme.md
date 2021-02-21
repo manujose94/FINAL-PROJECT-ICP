@@ -18,9 +18,8 @@ To realise this main objective, three lambda functions are created that execute 
 
 In order to achieve the main objective, 3 lambda functions with different roles have been developed, where due to the result or invocation by one of the three functions, the other lambda functions are activated. 
 
-These functions, along with any service implementation necessary for their operation, are created automatically by Python using the boto3 library. For the development of the functions, Python3 has been used together with boto3[^1]For two of them, being the last lambda function developed with Nodejs together with aws-sdk. 
+These functions, along with any service implementation necessary for their operation, are created automatically by Python using the boto3 library. For the development of the functions, Python3 has been used together with boto3. For two of them, being the last lambda function developed with Nodejs together with aws-sdk. 
 
-	[^1]: Amazon Web Services (AWS) SDK for Python, allowing you to create, configure and manage AWS services in Python
 
 ## Develop
 
@@ -38,9 +37,7 @@ Before proceeding with each function, it is necessary to put into context the mo
 
 - **Context**: Second parameter of the lambda function, used, for example, to obtain information that AWS lambda provides (time remaining before the function terminates) or to mark the completion of an asynchronous function by "*context.succeed('Completion message')*" (Used in languages such as Nodejs). 
 
-- **Logging**: All messages displayed by standard output (e.g. *print, console.log, system.out.print*) will be transferred to CloudWatch Logs[^2], allowing them to be queried. 
-
-	[^2]: CloudWatch Logs service for monitoring and storing log files and accessing them.
+- **Logging**: All messages displayed by standard output (e.g. *print, console.log, system.out.print*) will be transferred to CloudWatch Logs, allowing them to be queried. 
 
 - **Stateless**: It is not assumed that the filesystem will be shared between invocations of the lambda function. Only /tmp has write permissions, the rest is read-only for the whole filesystem. 
 
