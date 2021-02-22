@@ -304,7 +304,7 @@ class lambdaManager:
         lam = self.alucloud.mysession.client('lambda')
         resp = lam.invoke(
             FunctionName=self.config['name'],
-            InvocationType='RequestResponse',
+            InvocationType='RequestResponse',# SYNC, for ASYNC InvocationType='Event'
             LogType='Tail',
             Payload=json.dumps({'first_name': first, 'last_name': last}))
         print(resp['Payload'].read())

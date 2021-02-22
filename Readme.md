@@ -76,7 +76,7 @@ This function is named in AWS lambda as **lambda-check-alucloud31**, it is invok
 
 This function has other different features from the previous one:
 
-##### Características
+##### Features
 
 - Nodejs12.x language
 - fs library to handle Read/Write operations (Allows to perform these operations synchronously).
@@ -123,7 +123,7 @@ Consequently, it performs the following steps:
 3. The result is uploaded to the same bucket again maintaining the name, but with extension .txt.
 
 
-### Creación y Lanzamiento
+### Creation and Launch
 
 The following section shows and explains how the deployment has been implemented, describing the necessary elements or services, the steps to follow and the aspects to take into account. In addition, it is specified how the deployment has been carried out automatically with the help of Python together with the Boto3 library.
 
@@ -147,7 +147,7 @@ Based on the previous points, we begin to deploy the lambda functions. The follo
 
 
 
-####  Implementación automática mediante script
+####  Automatic implementation via script
 
 To automatically deploy the above points, a series of Python scripts have been generated using the boto 3 library. Specifically, two Python files have been created, one of which provides the appropriate configuration and the other the functions to carry out each of the steps. 
 

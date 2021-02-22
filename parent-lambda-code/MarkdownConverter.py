@@ -52,9 +52,10 @@ def handler(event, context):
         myrequest={'message': "Crado {}".format(new_file), 'event': event, 'success': True, 'buket_out':bucket_out, 'key':new_file_out, 'operation_id':str(operation_id), 'invokeby':'lambda-markdown-alucloud31'}
 
         print ("[4] Invoke the lambda function {}".format('lambda-check-alucloud31'))   
+        #If the lambda-markdown function invokes the lambda-check function synchronously, this incurs "double billing".
         response = lambda_client.invoke(
             FunctionName = 'arn:aws:lambda:us-east-1:974349055189:function:lambda-check-alucloud31',
-            InvocationType = 'RequestResponse',
+            InvocationType = 'RequestResponse',# InvocationType='Event', to avoid "double billing". (async function)
             Payload = json.dumps(myrequest)
         )
         
